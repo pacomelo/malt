@@ -177,6 +177,7 @@ img { max-width:100%; display:block; }
   right:0; top:0; bottom:0; width:100px;
   background:linear-gradient(to right, transparent, var(--green-wash));
   pointer-events:none;
+  z-index:0;
 }
 .hero-eyebrow {
   font-family:var(--font-b); font-size:13px; font-weight:900;
@@ -187,10 +188,12 @@ img { max-width:100%; display:block; }
   font-family:var(--font-h); font-size:52px; font-weight:400;
   line-height:1.05; text-transform:uppercase; color:var(--green-dark);
   margin-bottom:20px; text-align:center;
+  position:relative; z-index:1;
 }
 .hero-sub {
   font-family:var(--font-ui); font-size:22px; font-weight:400;
   color:var(--green-dark); margin-bottom:32px;
+  position:relative; z-index:1;
 }
 .btn-hero {
   display:inline-block; font-family:var(--font-b); font-size:15px;
@@ -362,6 +365,7 @@ img { max-width:100%; display:block; }
   box-shadow:0 2px 12px rgba(0,0,0,0.07);
   display:flex; flex-direction:column; align-items:center;
   transition:box-shadow .2s;
+  position:relative;
 }
 .card:hover { box-shadow:0 6px 24px rgba(0,0,0,0.13); }
 .section-wash .card { box-shadow:0 2px 12px rgba(85,96,28,0.1); }
@@ -389,9 +393,30 @@ img { max-width:100%; display:block; }
   text-transform:uppercase; letter-spacing:.8px; color:var(--text-mid);
   background:var(--green-pale); border:none; padding:8px 14px;
   cursor:pointer; border-radius:2px; transition:all .2s;
-  position:relative;
+  display:inline-flex; align-items:center; gap:7px;
 }
 .btn-basic-info:hover { background:#dde3c8; color:var(--green-dark); }
+.btn-basic-info i { font-size:11px; transition:transform .3s; flex-shrink:0; }
+.btn-basic-info.open i { transform:rotate(45deg); }
+
+/* Card accordion panel — absolutely positioned below card so siblings are unaffected */
+.card-accordion {
+  position:absolute; top:100%; left:0; right:0;
+  max-height:0; overflow:hidden;
+  transition:max-height .35s ease;
+  background:#fff;
+  border-radius:0 0 4px 4px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.10);
+  z-index:10;
+}
+.card-accordion.open { max-height:400px; }
+.card-accordion-inner {
+  padding:16px 20px 20px;
+  border-top:2px solid #d4ddb8;
+  font-size:14px; line-height:1.75; color:var(--text);
+}
+.card-accordion-inner strong { display:block; margin-bottom:6px; color:var(--green-dark); }
+.card-accordion-inner a { color:var(--green-dark); }
 
 .btn-learn-more {
   font-family:var(--font-b); font-size:12px; font-weight:700;
@@ -401,7 +426,7 @@ img { max-width:100%; display:block; }
 }
 .btn-learn-more:hover { background:var(--green-mid); }
 
-/* Basic Info tooltip */
+/* Quick Look tooltip */
 .tooltip-wrapper { position:relative; display:inline-block; }
 .tooltip-box {
   display:none; position:absolute; bottom:calc(100% + 10px); left:0;
@@ -820,7 +845,7 @@ img { max-width:100%; display:block; }
     <div class="give-grid">
       <!-- Left: copy -->
       <div>
-        <h3 class="give-h2">NO FARM, NO TABLE.</h3>
+        <h3 class="give-h2">Growing Marin's Future</h3>
         <p class="give-body">Marin's farms don't just protect themselves. Land costs are rising, farmers are aging out and the next generation needs help.</p>
         <p class="give-body">Monthly Giving provides steady and reliable funding to protect our farms — and gives you a front-row seat to the work that keeps Marin farming.</p>
       </div>
@@ -867,17 +892,17 @@ img { max-width:100%; display:block; }
         <h3 class="card-title">Donor-Advised Funds</h3>
         <p class="card-body">A simple, tax-efficient way to give. Recommend a grant to MALT from your Donor-Advised Fund at Fidelity, Schwab, or your community foundation.</p>
         <div class="card-actions">
-          <div class="tooltip-wrapper">
-            <button class="btn-basic-info">Basic Info</button>
-            <div class="tooltip-box">
-              <strong>How to Give via DAF</strong>
-              MALT EIN: 94-XXXXXXX<br>
-              Marin Agricultural Land Trust<br>
-              P.O. Box 850, Point Reyes Station, CA 94956<br>
-              <a href="#" style="color:var(--green-pale);">Download DAF form →</a>
-            </div>
+          <button class="btn-basic-info" onclick="toggleCardAccordion(this)">Quick Look <i class="fas fa-plus"></i></button>
+          <button class="btn-learn-more">Get Started</button>
+        </div>
+        <div class="card-accordion">
+          <div class="card-accordion-inner">
+            <strong>How to Give via DAF</strong>
+            MALT EIN: 94-XXXXXXX<br>
+            Marin Agricultural Land Trust<br>
+            P.O. Box 850, Point Reyes Station, CA 94956<br>
+            <a href="#">Download DAF form →</a>
           </div>
-          <button class="btn-learn-more">Learn More</button>
         </div>
       </div>
 
@@ -887,17 +912,17 @@ img { max-width:100%; display:block; }
         <h3 class="card-title">Stock, Mutual Funds &amp; Securities</h3>
         <p class="card-body">Donating appreciated securities lets you avoid capital gains tax and receive a deduction for the full fair market value — a win for you and the land.</p>
         <div class="card-actions">
-          <div class="tooltip-wrapper">
-            <button class="btn-basic-info">Basic Info</button>
-            <div class="tooltip-box">
-              <strong>Stock Transfer Instructions</strong>
-              DTC #: XXXX<br>
-              Account #: XXXXXXXXX<br>
-              Broker: [MALT Brokerage]<br>
-              Notify: donations@malt.org
-            </div>
+          <button class="btn-basic-info" onclick="toggleCardAccordion(this)">Quick Look <i class="fas fa-plus"></i></button>
+          <button class="btn-learn-more">Get Started</button>
+        </div>
+        <div class="card-accordion">
+          <div class="card-accordion-inner">
+            <strong>Stock Transfer Instructions</strong>
+            DTC #: XXXX<br>
+            Account #: XXXXXXXXX<br>
+            Broker: [MALT Brokerage]<br>
+            Notify: donations@malt.org
           </div>
-          <button class="btn-learn-more">Learn More</button>
         </div>
       </div>
 
@@ -907,17 +932,17 @@ img { max-width:100%; display:block; }
         <h3 class="card-title">IRA: Qualified Charitable Distributions</h3>
         <p class="card-body">If you're 70½ or older, a Qualified Charitable Distribution from your IRA counts toward your Required Minimum Distribution — tax-free, up to $100,000/year.</p>
         <div class="card-actions">
-          <div class="tooltip-wrapper">
-            <button class="btn-basic-info">Basic Info</button>
-            <div class="tooltip-box">
-              <strong>IRA / QCD Details</strong>
-              Ask your IRA custodian to make a check payable to:<br>
-              Marin Agricultural Land Trust<br>
-              EIN: 94-XXXXXXX<br>
-              Mail to: P.O. Box 850, Point Reyes Station, CA 94956
-            </div>
+          <button class="btn-basic-info" onclick="toggleCardAccordion(this)">Quick Look <i class="fas fa-plus"></i></button>
+          <button class="btn-learn-more">Get Started</button>
+        </div>
+        <div class="card-accordion">
+          <div class="card-accordion-inner">
+            <strong>IRA / QCD Details</strong>
+            Ask your IRA custodian to make a check payable to:<br>
+            Marin Agricultural Land Trust<br>
+            EIN: 94-XXXXXXX<br>
+            Mail to: P.O. Box 850, Point Reyes Station, CA 94956
           </div>
-          <button class="btn-learn-more">Learn More</button>
         </div>
       </div>
 
@@ -981,7 +1006,7 @@ img { max-width:100%; display:block; }
         <h3 class="card-title">Member Benefits</h3>
         <p class="card-body">MALT members enjoy invitations to exclusive farm tours, hikes, and events — and the satisfaction of knowing your membership protects Marin's working landscape.</p>
         <div class="card-actions">
-          <button class="btn-learn-more">Learn More</button>
+          <button class="btn-learn-more">Get Started</button>
         </div>
       </div>
 
@@ -1182,6 +1207,19 @@ function selectAmount(btn) {
   btn.classList.add('selected');
 }
 
+// ── Card accordion (Tax-Smart Gifts) ─────────────────
+function toggleCardAccordion(btn) {
+  const card      = btn.closest('.card');
+  const accordion = card.querySelector('.card-accordion');
+  const isOpen    = accordion.classList.contains('open');
+  document.querySelectorAll('.card-accordion').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.btn-basic-info').forEach(b => b.classList.remove('open'));
+  if (!isOpen) {
+    accordion.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
 // ── FAQ accordion ────────────────────────────────────
 function toggleFaq(btn) {
   const answer = btn.nextElementSibling;
@@ -1200,13 +1238,6 @@ function toggleTooltip(wrapper) {
   document.querySelectorAll('.tooltip-wrapper').forEach(w => w.classList.remove('open'));
   if (!isOpen) wrapper.classList.add('open');
 }
-// Basic Info buttons
-document.querySelectorAll('.btn-basic-info').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    toggleTooltip(this.closest('.tooltip-wrapper'));
-  });
-});
 // Legacy Giving Circle link
 document.querySelectorAll('.legacy-circle-link').forEach(el => {
   el.addEventListener('click', function(e) {
