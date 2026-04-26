@@ -246,6 +246,7 @@ img { max-width:100%; display:block; }
 }
 .section-nav li:last-child a { border-right:none; }
 .section-nav a:hover, .section-nav a.active { color:#fff; background:rgba(255,255,255,0.12); }
+.nav-break { display:none; }
 
 /* ── FLOATING HELP BUTTON ────────────────────────── */
 .help-btn {
@@ -705,10 +706,11 @@ img { max-width:100%; display:block; }
   #site-header .main-nav { display:none; }
   #site-header .secondary-nav .menu > li.pill-btn { display:none; }
 
-  /* Section nav: horizontal scroll so labels stay readable */
-  .section-nav-wrapper { overflow-x:auto; -webkit-overflow-scrolling:touch; }
-  .section-nav { min-width:max-content; }
-  .section-nav a { white-space:nowrap; }
+  /* Section nav: wrap labels with line breaks */
+  .section-nav-wrapper { overflow-x:visible; }
+  .section-nav { min-width:0; }
+  .section-nav a { white-space:normal; line-height:1.2; }
+  .nav-break { display:block; }
 
   /* Hero */
   .hero-left { padding:40px 24px 36px; }
@@ -757,7 +759,7 @@ img { max-width:100%; display:block; }
   .hero-sub { font-size:16px; }
 
   /* Section nav */
-  .section-nav a { font-size:11px; letter-spacing:0.8px; padding:12px 6px; }
+  .section-nav a { font-size:13px; letter-spacing:0.5px; padding:10px 4px; }
 
   /* Sections */
   .section { padding:40px 16px; }
@@ -829,55 +831,13 @@ img { max-width:100%; display:block; }
 ══════════════════════════════════════════ -->
 <div class="section-nav-wrapper" id="section-nav">
   <ul class="section-nav">
-    <li><a href="#give-today" class="active">Give Today</a></li>
-    <li><a href="#tax-smart">Tax-Smart Gifts</a></li>
-    <li><a href="#lasting-gifts">Lasting Gifts</a></li>
-    <li><a href="#more-ways">More Ways to Give</a></li>
-    <li><a href="#faq">More Information</a></li>
+    <li><a href="#tax-smart">Tax-Smart<br class="nav-break"> Gifts</a></li>
+    <li><a href="#lasting-gifts">Lasting<br class="nav-break"> Gifts</a></li>
+    <li><a href="#more-ways">More Ways<br class="nav-break"> to Give</a></li>
+    <li><a href="#faq">More<br class="nav-break"> Information</a></li>
   </ul>
 </div>
 
-<!-- ══════════════════════════════════════════
-     GIVE TODAY
-══════════════════════════════════════════ -->
-<section class="section" id="give-today" style="background:var(--green-wash);">
-  <div class="section-inner">
-    <h2 class="section-title">Give Today</h2>
-    <div class="give-grid">
-      <!-- Left: copy -->
-      <div>
-        <h3 class="give-h2">Growing Marin's Future</h3>
-        <p class="give-body">Marin's farms don't just protect themselves. Land costs are rising, farmers are aging out and the next generation needs help.</p>
-        <p class="give-body">Monthly Giving provides steady and reliable funding to protect our farms — and gives you a front-row seat to the work that keeps Marin farming.</p>
-      </div>
-      <!-- Right: donation widget -->
-      <div>
-        <div class="donation-widget">
-          <div class="donation-tabs">
-            <button class="donation-tab active" onclick="setTab(this,'monthly')">Monthly</button>
-            <button class="donation-tab" onclick="setTab(this,'onetime')">One Time</button>
-          </div>
-          <div class="donation-body">
-            <span class="donation-label">Select an amount</span>
-            <div class="amount-grid">
-              <button class="amount-btn" onclick="selectAmount(this)">$10</button>
-              <button class="amount-btn selected" onclick="selectAmount(this)">$25</button>
-              <button class="amount-btn" onclick="selectAmount(this)">$50</button>
-              <button class="amount-btn" onclick="selectAmount(this)">$100</button>
-            </div>
-            <input type="text" class="amount-custom" placeholder="Other amount ($)">
-            <button class="btn-give-now">Give Today</button>
-            <p class="donation-monthly-note" id="monthly-note">Your monthly gift is fully tax-deductible and can be cancelled anytime.</p>
-          </div>
-        </div>
-      </div>
-      <p class="mail-note">
-        Traditional mail gifts work too! Send your gift to Marin Agricultural Land Trust,<br>
-        P.O. Box 850, Point Reyes Station, CA 94956.
-      </p>
-    </div>
-  </div>
-</section>
 
 <!-- ══════════════════════════════════════════
      TAX-SMART GIFTS
